@@ -21,18 +21,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-
-    // Disable CSRF (cross site request forgery)
     http.csrf().disable();
-
-    // No session will be created or used by spring security
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     // Entry points
     http.authorizeRequests()//
-        .antMatchers("/user/signin").permitAll()//
-        .antMatchers("/user/signup").permitAll()//
-        // Disallow everything else..
+        .antMatchers("/signin/").permitAll()
+        .antMatchers("/register/**").permitAll()
         .anyRequest().authenticated();
 
     // If a user try to access a resource without having enough permissions

@@ -3,12 +3,11 @@ package ir.coinance.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity(name = "users")
 @SequenceGenerator(name = "user_seq")
@@ -16,8 +15,8 @@ import javax.validation.constraints.Size;
 public class User extends BaseEntity {
 
     @NotNull
-    @Size(min = 1, max = 50)
-    @Column(length = 50, unique = true, nullable = false)
+    @Size(min = 11, max = 11)
+    @Column(length = 30, unique = true, nullable = false)
     private String login;
 
     @JsonIgnore
@@ -27,7 +26,7 @@ public class User extends BaseEntity {
     private String password;
 
     @Size(max = 200)
-    @Column(name = "first_name", length = 200)
+    @Column(length = 200)
     private String fullName;
 
     @Email
@@ -35,9 +34,10 @@ public class User extends BaseEntity {
     @Column(length = 254, unique = true)
     private String email;
 
+    @NotNull
     @Size(min = 11, max = 11)
     @Column(length = 30)
-    private String phone;
+    private String mobile;
 
     @NotNull
     @Column(nullable = false)
@@ -46,6 +46,10 @@ public class User extends BaseEntity {
     @NotNull
     @Column(nullable = false)
     private boolean verified = false;
+
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
+    private List<Role> roles;
 
     @Size(max = 256)
     @Column(name = "image_url", length = 256)

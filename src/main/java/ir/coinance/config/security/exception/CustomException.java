@@ -9,6 +9,11 @@ public class CustomException extends RuntimeException {
   private final String message;
   private final HttpStatus httpStatus;
 
+  public CustomException(String message) {
+    this.message = message;
+    this.httpStatus = HttpStatus.BAD_REQUEST;
+  }
+
   public CustomException(String message, HttpStatus httpStatus) {
     this.message = message;
     this.httpStatus = httpStatus;

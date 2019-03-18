@@ -4,7 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import ir.coinance.config.security.exception.CustomException;
-import ir.coinance.dto.Role;
+import ir.coinance.domain.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -24,22 +24,23 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenProvider {
 
-    private String secretKey = "slkjfdlksjdlfjsldkfj";
+    private String secretKey;
 
-    @Value("${security.jwt.token.expire-length:3600000}")
-    private long validityInMilliseconds = 3600000; // 1h
+    private Long validityInMilliseconds;
 
     @Autowired
     private MyUserDetails myUserDetails;
 
-    public JwtTokenProvider() {
+    @Autowired
+    public JwtTokenProvider(@Value("${sec.jwt.secretKey}") String secretKey, @Value("${security.jwt.token.expire.length}") Long validityInMilliseconds) {
         this.secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+        this.validityInMilliseconds = validityInMilliseconds;
     }
 
     public String createToken(String username, List<Role> roles) {
 
         Claims claims = Jwts.claims().setSubject(username);
-        claims.put("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));
+        claims.put("auth", roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).filter(Objects::nonNull).collect(Collectors.toList()));
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);

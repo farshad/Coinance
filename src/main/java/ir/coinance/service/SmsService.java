@@ -1,12 +1,16 @@
 package ir.coinance.service;
 
+import ir.coinance.config.security.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @Service
@@ -28,44 +32,48 @@ public class SmsService {
     private RestTemplate restTemplate;
 
     @Autowired
+    private MessageSource messageSource;
+
+    @Autowired
     private MobileVerificationService mobileVerificationService;
 
-    public String getToken() throws Exception {
+    public String getToken() throws CustomException {
         String token = "";
         Map<String, Object> params = Map.of("UserApiKey", userApiKey, "SecretKey", secretKey);
         Map<String, Object> response = restTemplate.postForObject(smsGateway + "Token", params, HashMap.class);
         if (!response.isEmpty()) {
-            if ((Boolean) response.get("IsSuccessful")){
+            if ((Boolean) response.get("IsSuccessful")) {
                 token = response.get("TokenKey").toString();
             }
-        } else throw new Exception("sms token not available");
+        } else throw new CustomException(messageSource.getMessage("server.error.call.to.support",null, Locale.US));
 
         return token;
     }
 
-    public void send() {
-        String token = null;
-        try {
-            token = getToken();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public Boolean send(String mobileNumber) throws CustomException{
         HttpHeaders headers = new HttpHeaders();
         headers.set("cache-control", "no-cache");
         headers.set("Content-Type", "application/json");
-        headers.set("x-sms-ir-secure-token", token);
+        headers.set("x-sms-ir-secure-token", getToken());
 
-        String message = "کد تایید شما:";
+        if (mobileVerificationService.waitingCheck(mobileNumber)){
+            throw new CustomException("لطفا ۲ دقیقه دیگر تلاش کنید");
+        }
+
+        String message = mobileVerificationService.getVerificationCode(mobileNumber) + "کد تایید شما: ";
 
         Map<String, Object> params = Map.of(
-                "Messages", new String[]{"تست"},
-                "MobileNumbers", new String[]{"09031888448"},
+                "Messages", new String[]{message},
+                "MobileNumbers", new String[]{mobileNumber},
                 "LineNumber", lineNumber,
                 "SendDateTime", "",
                 "CanContinueInCaseOfError", false);
-        mobileVerificationService.getVerficationCode();
-        //Map<String, String> response = restTemplate.postForObject(smsGateway + "MessageSend", new HttpEntity<>(params, headers), HashMap.class);
+
+        Map<String, Object> response = restTemplate.postForObject(smsGateway + "MessageSend", new HttpEntity<>(params, headers), HashMap.class);
+
+        if ((Boolean) response.get("IsSuccessful")){
+            return true;
+        } else throw new CustomException(messageSource.getMessage("server.error.call.to.support",null, Locale.US));
     }
 
 }

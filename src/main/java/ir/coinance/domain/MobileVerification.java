@@ -1,7 +1,6 @@
 package ir.coinance.domain;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +10,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @SequenceGenerator(name = "mobile_verification_seq")
-@Builder
-@Data
+@Getter@Setter@NoArgsConstructor@AllArgsConstructor@Builder
 public class MobileVerification extends BaseEntity {
 
     @NotNull
@@ -26,3 +24,4 @@ public class MobileVerification extends BaseEntity {
 
     private Boolean verified = false;
 }
+
