@@ -4,7 +4,6 @@ import ir.coinance.dto.TicketAddDto;
 import ir.coinance.dto.TicketDto;
 import ir.coinance.dto.TicketFlatDto;
 import ir.coinance.service.TicketService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
