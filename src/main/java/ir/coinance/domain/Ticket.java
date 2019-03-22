@@ -1,6 +1,6 @@
 package ir.coinance.domain;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @SequenceGenerator(name = "ticket_seq")
-@Data
+@Getter@Setter@NoArgsConstructor@AllArgsConstructor@Builder
 public class Ticket extends BaseEntity {
 
     @NotNull

@@ -19,10 +19,10 @@ public class User extends BaseEntity {
     @Column(length = 30, unique = true, nullable = false)
     private String login;
 
-    @JsonIgnore
     @NotNull
     @Size(min = 8, max = 255)
     @Column(name = "password_hash", nullable = false)
+    @JsonIgnore
     private String password;
 
     @Size(max = 200)

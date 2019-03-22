@@ -60,7 +60,7 @@ public class SmsService {
             throw new CustomException("لطفا ۲ دقیقه دیگر تلاش کنید");
         }
 
-        String message = mobileVerificationService.getVerificationCode(mobileNumber) + "کد تایید شما: ";
+        String message = "کد تایید شما: " + mobileVerificationService.getVerificationCode(mobileNumber);
 
         Map<String, Object> params = Map.of(
                 "Messages", new String[]{message},
@@ -71,7 +71,7 @@ public class SmsService {
 
         Map<String, Object> response = restTemplate.postForObject(smsGateway + "MessageSend", new HttpEntity<>(params, headers), HashMap.class);
 
-        if ((Boolean) response.get("IsSuccessful")){
+         if ((Boolean) response.get("IsSuccessful")){
             return true;
         } else throw new CustomException(messageSource.getMessage("server.error.call.to.support",null, Locale.US));
     }

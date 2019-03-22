@@ -29,7 +29,7 @@ public class JwtTokenProvider {
     private Long validityInMilliseconds;
 
     @Autowired
-    private MyUserDetails myUserDetails;
+    private CustomUserDetails customUserDetails;
 
     @Autowired
     public JwtTokenProvider(@Value("${sec.jwt.secretKey}") String secretKey, @Value("${security.jwt.token.expire.length}") Long validityInMilliseconds) {
@@ -54,7 +54,7 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = myUserDetails.loadUserByUsername(getUsername(token));
+        UserDetails userDetails = customUserDetails.loadUserByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 

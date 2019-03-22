@@ -1,15 +1,24 @@
 package ir.coinance.config.security;
 
+import ir.coinance.domain.User;
+import ir.coinance.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Utility class for Spring Security.
  */
+@Component
 public final class SecurityUtils {
+
+    @Autowired
+    private UserRepository userRepository;
 
     private SecurityUtils() {
     }
@@ -19,18 +28,22 @@ public final class SecurityUtils {
      *
      * @return the login of the current user
      */
-    public static Optional<String> getCurrentUserLogin() {
+    public User getCurrentUser() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
-        return Optional.ofNullable(securityContext.getAuthentication())
-            .map(authentication -> {
-                if (authentication.getPrincipal() instanceof UserDetails) {
-                    UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
-                    return springSecurityUser.getUsername();
-                } else if (authentication.getPrincipal() instanceof String) {
-                    return (String) authentication.getPrincipal();
-                }
-                return null;
-            });
+        String username = null;
+        User user = null;
+
+        if (securityContext != null){
+            if (securityContext.getAuthentication().getPrincipal() instanceof UserDetails) {
+                UserDetails springSecurityUser = (UserDetails) securityContext.getAuthentication().getPrincipal();
+                username = springSecurityUser.getUsername();
+            } else if (securityContext.getAuthentication().getPrincipal() instanceof String) {
+                username = (String) securityContext.getAuthentication().getPrincipal();
+            }
+            user = userRepository.findByLogin(username);
+        }
+
+        return user;
     }
 
     /**
@@ -38,7 +51,7 @@ public final class SecurityUtils {
      *
      * @return the JWT of the current user
      */
-    public static Optional<String> getCurrentUserJWT() {
+    public Optional<String> getCurrentUserJWT() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         return Optional.ofNullable(securityContext.getAuthentication())
             .filter(authentication -> authentication.getCredentials() instanceof String)
@@ -50,7 +63,7 @@ public final class SecurityUtils {
      *
      * @return true if the user is authenticated, false otherwise
      */
-    public static boolean isAuthenticated() {
+    public boolean isAuthenticated() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         return Optional.ofNullable(securityContext.getAuthentication())
             .map(authentication -> authentication.getAuthorities().stream()
@@ -66,7 +79,7 @@ public final class SecurityUtils {
      * @param authority the authority to check
      * @return true if the current user has the authority, false otherwise
      */
-    public static boolean isCurrentUserInRole(String authority) {
+    public boolean isCurrentUserInRole(String authority) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         return Optional.ofNullable(securityContext.getAuthentication())
             .map(authentication -> authentication.getAuthorities().stream()
