@@ -1,6 +1,7 @@
 package ir.coinance.service;
 
 import ir.coinance.config.security.JwtTokenProvider;
+import ir.coinance.config.security.SecurityUtils;
 import ir.coinance.config.security.exception.CustomException;
 import ir.coinance.domain.Role;
 import ir.coinance.domain.User;
@@ -17,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserService {
 
     @Autowired
@@ -35,6 +35,10 @@ public class UserService {
     @Autowired
     private UserMapper mapper;
 
+    @Autowired
+    private SecurityUtils securityUtils;
+
+    @Transactional
     public String register(UserAddDto dto) throws CustomException {
         if (!mobileVerificationRepository.existsMobileVerificationByMobileNumberAndVerified(dto.getMobile(), true)){
             throw new CustomException("شماره موبایل شما تایید نشده است");
@@ -51,5 +55,14 @@ public class UserService {
         User user = repository.save(entity);
 
         return jwtTokenProvider.createToken(entity.getLogin(), user.getRoles());
+    }
+
+    @Transactional
+    public Boolean changePassword(String password){
+        User user = securityUtils.getCurrentUser();
+        user.setPassword(passwordEncoder.encode(password));
+        repository.save(user);
+
+        return true;
     }
 }
