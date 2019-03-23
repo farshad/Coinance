@@ -1,13 +1,11 @@
 package ir.coinance.controller;
 
 import io.swagger.annotations.ApiParam;
+import ir.coinance.dto.UserUpdateDto;
 import ir.coinance.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/profile")
@@ -19,5 +17,10 @@ public class ProfileController {
     @PostMapping("/changePassword")
     public ResponseEntity changePassword(@ApiParam("Password") @RequestParam String password) {
         return ResponseEntity.ok(userService.changePassword(password));
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity update(@RequestBody UserUpdateDto dto) {
+        return ResponseEntity.ok(userService.updateProfile(dto));
     }
 }

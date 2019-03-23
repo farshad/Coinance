@@ -8,7 +8,7 @@ public class UserDto extends BaseDto {
     private String fullName;
     private String email;
     private String mobile;
-    private boolean activated = false;
-    private boolean verified = false;
+    private boolean activated;
+    private boolean verified;
     private String imageUrl;
 }

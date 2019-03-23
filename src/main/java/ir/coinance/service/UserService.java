@@ -6,6 +6,8 @@ import ir.coinance.config.security.exception.CustomException;
 import ir.coinance.domain.Role;
 import ir.coinance.domain.User;
 import ir.coinance.dto.UserAddDto;
+import ir.coinance.dto.UserDto;
+import ir.coinance.dto.UserUpdateDto;
 import ir.coinance.dto.enums.RoleEnum;
 import ir.coinance.mapper.UserMapper;
 import ir.coinance.repository.MobileVerificationRepository;
@@ -64,5 +66,14 @@ public class UserService {
         repository.save(user);
 
         return true;
+    }
+
+    @Transactional
+    public UserDto updateProfile(UserUpdateDto dto){
+        User user = securityUtils.getCurrentUser();
+        user.setFullName(dto.getFullName());
+        user.setEmail(dto.getEmail());
+
+        return mapper.toDto(repository.save(user));
     }
 }

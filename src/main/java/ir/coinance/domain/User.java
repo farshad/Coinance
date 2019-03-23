@@ -53,7 +53,7 @@ public class User extends BaseEntity {
 
     @OneToMany
     @JoinColumn(name = "user_id")
-    private BankAccount bankAccount;
+    private List<BankAccount> bankAccounts;
 
     @Size(max = 256)
     @Column(name = "image_url", length = 256)
