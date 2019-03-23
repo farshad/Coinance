@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class DocumentDto extends BaseDto {
-    private Byte[] image;
+    private byte[] image;
+    private String suffix;
     private EnumTypeDto fileType;
-    private Long userId;
+    private EnumTypeDto status;
 }

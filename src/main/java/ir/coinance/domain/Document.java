@@ -15,10 +15,17 @@ public class Document extends BaseEntity {
 
     @NotNull
     @Column(name = "image_file", nullable = false)
-    private Byte[] image;
+    private byte[] image;
+
+    private String name;
+    private String suffix;
 
     @ManyToOne
     private EnumType fileType;
 
+    @ManyToOne
+    private EnumType status;
+
+    @Column(name = "user_id")
     private Long userId;
 }

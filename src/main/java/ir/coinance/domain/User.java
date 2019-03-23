@@ -55,6 +55,10 @@ public class User extends BaseEntity {
     @JoinColumn(name = "user_id")
     private List<BankAccount> bankAccounts;
 
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<Document> documents;
+
     @Size(max = 256)
     @Column(name = "image_url", length = 256)
     private String imageUrl;
