@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EnumTypeRepository extends JpaRepository<EnumType, Long> {
+    EnumType findByKey(String key);
 }

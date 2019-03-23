@@ -24,5 +24,6 @@ public class BankAccount extends BaseEntity {
     @ManyToOne
     private Bank bank;
 
+    @Column(name = "user_id")
     private Long userId;
 }

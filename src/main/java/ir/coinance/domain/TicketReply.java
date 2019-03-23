@@ -16,5 +16,6 @@ public class TicketReply extends BaseEntity {
     @Column(nullable = false, length = 1000)
     private String description;
 
+    @Column(name = "ticket_id")
     private Long ticketId;
 }

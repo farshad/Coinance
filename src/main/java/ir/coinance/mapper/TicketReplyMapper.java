@@ -1,8 +1,6 @@
 package ir.coinance.mapper;
 
-import ir.coinance.domain.DealRequest;
 import ir.coinance.domain.TicketReply;
-import ir.coinance.dto.DealRequestDto;
 import ir.coinance.dto.TicketReplyDto;
 import org.mapstruct.Mapper;
 

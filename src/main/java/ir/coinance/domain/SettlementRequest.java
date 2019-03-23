@@ -1,6 +1,6 @@
 package ir.coinance.domain;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,14 +10,15 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @SequenceGenerator(name = "settlement_request_seq")
-@Data
+@Getter@Setter@NoArgsConstructor@AllArgsConstructor@Builder
 public class SettlementRequest extends BaseEntity {
 
     @NotNull
     @Column(nullable = false)
     private Float amount;
 
-    private Long userId;
+    @ManyToOne
+    private User user;
 
     @ManyToOne
     private EnumType status;

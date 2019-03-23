@@ -22,7 +22,7 @@ public class TicketReplyController {
 
     @PostMapping("/delete")
     public ResponseEntity<Boolean> delete(@RequestParam("id") Long id,
-                                                  @RequestParam("statusId") Long ticketId){
+                                                  @RequestParam("ticketId") Long ticketId){
         service.delete(id, ticketId);
         return ResponseEntity.ok(true);
     }

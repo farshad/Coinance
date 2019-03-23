@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class SettlementRequestDto extends BaseDto {
     private Float amount;
-    private Long userId;
+    private UserDto user;
     private EnumTypeDto status;
 }
