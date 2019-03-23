@@ -3,7 +3,6 @@ package ir.coinance.service;
 import ir.coinance.config.security.SecurityUtils;
 import ir.coinance.domain.Document;
 import ir.coinance.dto.DocumentAddDto;
-import ir.coinance.dto.DocumentDto;
 import ir.coinance.dto.DocumentExceptUserDto;
 import ir.coinance.mapper.DocumentMapper;
 import ir.coinance.repository.DocumentRepository;
@@ -50,6 +49,7 @@ public class DocumentService {
         return mapper.toExceptUserDto(repository.save(document));
     }
 
+    @Transactional(readOnly = true)
     public List<DocumentExceptUserDto> findByUserId() {
         return repository.findByUserId(securityUtils.getCurrentUser().getId())
                 .stream()

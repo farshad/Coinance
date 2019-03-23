@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 public class UserAddDto {
 
     @NotNull
-    @Size(min = 11, max = 11, message = "{mobile.length}")
+    @Size(min = 13, max = 13, message = "{mobile.length}")
     private String mobile;
 
     @NotNull

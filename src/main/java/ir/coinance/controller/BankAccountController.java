@@ -20,7 +20,7 @@ public class BankAccountController {
         return ResponseEntity.ok(service.save(dto));
     }
 
-    @GetMapping("/find")
+    @GetMapping("/")
     public ResponseEntity findByUserId() {
         return ResponseEntity.ok(service.findByUserId());
     }

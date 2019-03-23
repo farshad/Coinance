@@ -18,7 +18,7 @@ public class MobileVerification extends BaseEntity {
     private String verificationCode;
 
     @NotNull
-    @Size(min = 11, max = 11)
+    @Size(min = 13, max = 13)
     @Column(length = 30)
     private String mobileNumber;
 
