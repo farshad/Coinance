@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/profile")
 public class ProfileController {
@@ -20,7 +22,7 @@ public class ProfileController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity update(@RequestBody UserUpdateDto dto) {
+    public ResponseEntity update(@ModelAttribute @Valid UserUpdateDto dto) {
         return ResponseEntity.ok(userService.updateProfile(dto));
     }
 }

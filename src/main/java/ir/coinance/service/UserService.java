@@ -13,10 +13,15 @@ import ir.coinance.mapper.UserMapper;
 import ir.coinance.repository.MobileVerificationRepository;
 import ir.coinance.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -39,6 +44,9 @@ public class UserService {
 
     @Autowired
     private SecurityUtils securityUtils;
+
+    @Value("${profile.image.upload.dir}")
+    private String profileImageUploadDir;
 
     @Transactional
     public String register(UserAddDto dto) throws CustomException {
@@ -71,8 +79,19 @@ public class UserService {
     @Transactional
     public UserDto updateProfile(UserUpdateDto dto){
         User user = securityUtils.getCurrentUser();
+        String imageUrl = profileImageUploadDir + user.getId() + System.currentTimeMillis() + "_" + dto.getImage().getOriginalFilename();
+
         user.setFullName(dto.getFullName());
         user.setEmail(dto.getEmail());
+        user.setImageUrl(imageUrl);
+
+        try {
+            byte[] bytes = dto.getImage().getBytes();
+            Path path = Paths.get(imageUrl);
+            Files.write(path, bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return mapper.toDto(repository.save(user));
     }
