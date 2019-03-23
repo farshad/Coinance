@@ -26,6 +26,6 @@ public class Document extends BaseEntity {
     @ManyToOne
     private EnumType status;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne
+    private User user;
 }
