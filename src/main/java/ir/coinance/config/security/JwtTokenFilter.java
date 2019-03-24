@@ -7,6 +7,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -33,6 +34,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
       SecurityContextHolder.clearContext();
       httpServletResponse.sendError(ex.getHttpStatus().value(), ex.getMessage());
       return;
+    }
+
+    if ("OPTIONS".equals(httpServletRequest.getMethod())) {
+      httpServletResponse.setStatus(HttpServletResponse.SC_OK);
     }
 
     filterChain.doFilter(httpServletRequest, httpServletResponse);

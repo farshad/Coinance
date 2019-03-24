@@ -1,6 +1,5 @@
 package ir.coinance.controller;
 
-import io.swagger.annotations.ApiParam;
 import ir.coinance.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +15,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/")
-    public String login(
-                        @ApiParam("Username") @RequestParam String username,
-                        @ApiParam("Password") @RequestParam String password) {
+    public String login(@RequestParam String username, @RequestParam String password) {
         return authService.signin(username, password);
     }
 }

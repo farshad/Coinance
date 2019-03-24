@@ -29,7 +29,7 @@ public class TicketController {
     @PostMapping("/updateStatus")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<TicketFlatDto> updateStatus(@RequestParam("id") Long id,
-                                                  @RequestParam("statusId") Long statusId){
+                                                      @RequestParam("statusId") Long statusId){
         return ResponseEntity.ok(service.updateStatus(id, statusId));
     }
 
