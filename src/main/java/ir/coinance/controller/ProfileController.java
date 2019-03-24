@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/profile")
@@ -16,9 +17,8 @@ public class ProfileController {
     private UserService userService;
 
     @PostMapping("/changePassword")
-    public ResponseEntity changePassword(@RequestParam("oldPassword") String oldPassword,
-                                         @RequestParam("newPassword") String newPassword) {
-        return ResponseEntity.ok(userService.changePassword(oldPassword, newPassword));
+    public ResponseEntity changePassword(@RequestBody HashMap<String, String> req) {
+        return ResponseEntity.ok(userService.changePassword(req.get("oldPassword"), req.get("newPassword")));
     }
 
     @PostMapping("/update")
