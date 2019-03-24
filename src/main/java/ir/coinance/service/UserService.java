@@ -14,6 +14,7 @@ import ir.coinance.repository.MobileVerificationRepository;
 import ir.coinance.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.SpringSecurityMessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,9 +69,13 @@ public class UserService {
     }
 
     @Transactional
-    public Boolean changePassword(String password){
+    public Boolean changePassword(String oldPassword, String newPassword){
         User user = securityUtils.getCurrentUser();
-        user.setPassword(passwordEncoder.encode(password));
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())){
+            throw new CustomException("رمز عبور جاری اشتباه است");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
         repository.save(user);
 
         return true;

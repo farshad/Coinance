@@ -35,7 +35,7 @@ public class RegisterController extends ControllerExceptionHandling {
     }
 
     @PostMapping("/getVerificationCode")
-    public ResponseEntity getVerificationCode(@RequestParam("mobileNumber") @Size(min = 13, max = 13, message = "{mobile.length}") String mobileNumber) throws CustomException {
+    public ResponseEntity getVerificationCode(@RequestParam("mobileNumber") @Size(min = 11, max = 11, message = "{mobile.length}") String mobileNumber) throws CustomException {
         return new ResponseEntity(smsService.send(mobileNumber), HttpStatus.OK);
     }
 

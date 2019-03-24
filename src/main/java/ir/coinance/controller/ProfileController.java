@@ -1,6 +1,5 @@
 package ir.coinance.controller;
 
-import io.swagger.annotations.ApiParam;
 import ir.coinance.dto.UserUpdateDto;
 import ir.coinance.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,9 @@ public class ProfileController {
     private UserService userService;
 
     @PostMapping("/changePassword")
-    public ResponseEntity changePassword(@ApiParam("Password") @RequestParam String password) {
-        return ResponseEntity.ok(userService.changePassword(password));
+    public ResponseEntity changePassword(@RequestParam("oldPassword") String oldPassword,
+                                         @RequestParam("newPassword") String newPassword) {
+        return ResponseEntity.ok(userService.changePassword(oldPassword, newPassword));
     }
 
     @PostMapping("/update")

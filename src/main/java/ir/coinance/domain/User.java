@@ -15,7 +15,6 @@ import java.util.List;
 public class User extends BaseEntity {
 
     @NotNull
-    @Size(min = 13, max = 13)
     @Column(length = 30, unique = true, nullable = false)
     private String login;
 
@@ -35,7 +34,7 @@ public class User extends BaseEntity {
     private String email;
 
     @NotNull
-    @Size(min = 13, max = 13)
+    @Size(min = 11, max = 11)
     @Column(length = 30)
     private String mobile;
 
