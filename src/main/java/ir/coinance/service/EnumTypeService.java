@@ -1,6 +1,5 @@
 package ir.coinance.service;
 
-import ir.coinance.domain.EnumType;
 import ir.coinance.dto.AllEnumTypesDto;
 import ir.coinance.dto.EnumTypeDto;
 import ir.coinance.mapper.EnumTypeMapper;
@@ -25,6 +24,7 @@ public class EnumTypeService {
     @Transactional(readOnly = true)
     public AllEnumTypesDto fetchEnumTypes(){
         AllEnumTypesDto allEnumTypesDto = new AllEnumTypesDto();
+
         List<EnumTypeDto> enumTypeDtos = mapper.toDtos(repository.findByParentIdIsNull());
         Supplier<Stream<EnumTypeDto>> stream = () -> enumTypeDtos.stream();
 
@@ -33,6 +33,8 @@ public class EnumTypeService {
         allEnumTypesDto.setTicketReplyStatus(stream.get().filter(et -> et.getKey().equals("ticket_reply_status")).findAny().orElse(null));
         allEnumTypesDto.setTicketStatus(stream.get().filter(et -> et.getKey().equals("ticket_status")).findAny().orElse(null));
         allEnumTypesDto.setUnitType(stream.get().filter(et -> et.getKey().equals("unit_type")).findAny().orElse(null));
+        allEnumTypesDto.setDealSuggestionType(stream.get().filter(et -> et.getKey().equals("deal_suggestion_type")).findAny().orElse(null));
+        allEnumTypesDto.setDealSuggestionStatus(stream.get().filter(et -> et.getKey().equals("deal_suggestion_status")).findAny().orElse(null));
 
         return allEnumTypesDto;
     }

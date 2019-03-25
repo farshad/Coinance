@@ -2,17 +2,19 @@ package ir.coinance.dto;
 
 import lombok.Data;
 
-import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class DealSuggestionDto extends BaseDto {
 
+    @NotNull
     private Float differencePrice;
-    @Column(nullable = false)
+    @NotNull
     private Integer rangeFrom;
+    @NotNull
     private Integer rangeTo;
     private EnumTypeDto type;
     private EnumTypeDto status;
     private CurrencyDto currency;
-    private UserDto user;
+    private UserInfoDto user;
 }

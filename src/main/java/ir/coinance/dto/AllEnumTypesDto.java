@@ -9,4 +9,6 @@ public class AllEnumTypesDto {
     private EnumTypeDto ticketReplyStatus;
     private EnumTypeDto documentTypeStatus;
     private EnumTypeDto fileType;
+    private EnumTypeDto dealSuggestionType;
+    private EnumTypeDto dealSuggestionStatus;
 }

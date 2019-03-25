@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class Currency extends BaseEntity {
 
     @NotNull
-    @Column(name = "english_name", nullable = false)
+    @Column(name = "english_name")
     private String englishName;
 
     @NotNull
