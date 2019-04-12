@@ -8,7 +8,7 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@SequenceGenerator(name = "ticket_reply_seq")
+@SequenceGenerator(name = "sequenceGenerator")
 @Data
 public class TicketReply extends BaseEntity {
 

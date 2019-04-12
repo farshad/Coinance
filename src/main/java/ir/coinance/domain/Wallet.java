@@ -8,7 +8,7 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@SequenceGenerator(name = "wallet_seq")
+@SequenceGenerator(name = "sequenceGenerator")
 @Data
 public class Wallet extends BaseEntity {
 

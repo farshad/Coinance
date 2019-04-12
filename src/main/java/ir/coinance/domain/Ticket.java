@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@SequenceGenerator(name = "ticket_seq")
+@SequenceGenerator(name = "sequenceGenerator")
 @Getter@Setter@NoArgsConstructor@AllArgsConstructor@Builder
 public class Ticket extends BaseEntity {
 

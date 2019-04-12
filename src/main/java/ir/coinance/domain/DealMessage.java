@@ -9,7 +9,7 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@SequenceGenerator(name = "deal_message_seq")
+@SequenceGenerator(name = "sequenceGenerator")
 @Data
 public class DealMessage extends BaseEntity {
 

@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@SequenceGenerator(name = "enum_type_seq")
+@SequenceGenerator(name = "sequenceGenerator")
 @Data
 public class EnumType extends BaseEntity {
 

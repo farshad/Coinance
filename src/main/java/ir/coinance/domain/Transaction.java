@@ -2,15 +2,13 @@ package ir.coinance.domain;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-@Entity(name = "transactions")
-@SequenceGenerator(name = "transaction_seq")
+@Entity
+@Table(name = "transactions")
+@SequenceGenerator(name = "sequenceGenerator")
 @Data
 public class Transaction extends BaseEntity {
 
@@ -28,3 +26,4 @@ public class Transaction extends BaseEntity {
 
     private Long userId;
 }
+

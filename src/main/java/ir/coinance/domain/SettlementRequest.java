@@ -9,7 +9,7 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@SequenceGenerator(name = "settlement_request_seq")
+@SequenceGenerator(name = "sequenceGenerator")
 @Getter@Setter@NoArgsConstructor@AllArgsConstructor@Builder
 public class SettlementRequest extends BaseEntity {
 

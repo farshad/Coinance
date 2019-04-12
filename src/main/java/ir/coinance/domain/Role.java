@@ -9,7 +9,7 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@SequenceGenerator(name = "role_seq")
+@SequenceGenerator(name = "sequenceGenerator")
 @Getter@Setter
 public class Role extends BaseEntity {
 

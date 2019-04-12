@@ -9,8 +9,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
-@Entity(name = "users")
-@SequenceGenerator(name = "user_seq")
+@Entity
+@Table(name = "users")
+@SequenceGenerator(name = "sequenceGenerator")
 @Data
 public class User extends BaseEntity {
 

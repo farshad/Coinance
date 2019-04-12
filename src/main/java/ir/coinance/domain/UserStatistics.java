@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name = "user_statistics_seq")
+@SequenceGenerator(name = "sequenceGenerator")
 @Data
 public class UserStatistics extends BaseEntity {
 
