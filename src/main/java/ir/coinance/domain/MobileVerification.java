@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@SequenceGenerator(name = "sequenceGenerator")
+@SequenceGenerator(name = "sequenceGenerator", allocationSize = 1)
 @Getter@Setter@NoArgsConstructor@AllArgsConstructor@Builder
 public class MobileVerification extends BaseEntity {
 

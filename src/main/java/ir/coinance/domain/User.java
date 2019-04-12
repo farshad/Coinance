@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-@SequenceGenerator(name = "sequenceGenerator")
+@SequenceGenerator(name = "sequenceGenerator", allocationSize = 1)
 @Data
 public class User extends BaseEntity {
 

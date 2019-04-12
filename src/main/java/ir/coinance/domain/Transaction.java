@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "transactions")
-@SequenceGenerator(name = "sequenceGenerator")
+@SequenceGenerator(name = "sequenceGenerator", allocationSize = 1)
 @Data
 public class Transaction extends BaseEntity {
 
