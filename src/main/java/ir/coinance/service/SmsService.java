@@ -69,11 +69,12 @@ public class SmsService {
                 "SendDateTime", "",
                 "CanContinueInCaseOfError", false);
 
-        Map<String, Object> response = restTemplate.postForObject(smsGateway + "MessageSend", new HttpEntity<>(params, headers), HashMap.class);
-
-         if ((Boolean) response.get("IsSuccessful")){
-            return true;
-        } else throw new CustomException(messageSource.getMessage("server.error.call.to.support",null, Locale.US));
+//        Map<String, Object> response = restTemplate.postForObject(smsGateway + "MessageSend", new HttpEntity<>(params, headers), HashMap.class);
+//
+//         if ((Boolean) response.get("IsSuccessful")){
+//            return true;
+//        } else throw new CustomException(messageSource.getMessage("server.error.call.to.support",null, Locale.US));
+        return true;
     }
 
 }
