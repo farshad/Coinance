@@ -73,7 +73,7 @@ public class SmsService {
 //
 //         if ((Boolean) response.get("IsSuccessful")){
 //            return true;
-//        } else throw new CustomException(messageSource.getMessage("server.error.call.to.support",null, Locale.US));
+//        } else throw new CustomException(messageSource.getType("server.error.call.to.support",null, Locale.US));
         return true;
     }
 

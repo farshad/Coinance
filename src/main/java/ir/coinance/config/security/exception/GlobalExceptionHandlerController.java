@@ -30,7 +30,7 @@
 //
 //  @ExceptionHandler(CustomException.class)
 //  public void handleCustomException(HttpServletResponse res, CustomException ex) throws IOException {
-//    res.sendError(ex.getHttpStatus().value(), ex.getMessage());
+//    res.sendError(ex.getHttpStatus().value(), ex.getType());
 //  }
 //
 //  @ExceptionHandler(AccessDeniedException.class)

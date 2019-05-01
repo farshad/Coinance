@@ -5,28 +5,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * View Model for transferring error message with a list of field errors.
+ * View Model for transferring error type with a list of field errors.
  */
 public class ErrorVM implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final String message;
+    private final String type;
     private final String description;
 
     private List<FieldErrorVM> errors;
 
-    public ErrorVM(String message) {
-        this(message, null);
+    public ErrorVM(String type) {
+        this(type, null);
     }
 
-    public ErrorVM(String message, String description) {
-        this.message = message;
+    public ErrorVM(String type, String description) {
+        this.type = type;
         this.description = description;
     }
 
-    public ErrorVM(String message, String description, List<FieldErrorVM> errors) {
-        this.message = message;
+    public ErrorVM(String type, String description, List<FieldErrorVM> errors) {
+        this.type = type;
         this.description = description;
         this.errors = errors;
     }
@@ -38,8 +38,8 @@ public class ErrorVM implements Serializable {
         errors.add(new FieldErrorVM(objectName, field, message));
     }
 
-    public String getMessage() {
-        return message;
+    public String getType() {
+        return type;
     }
 
     public String getDescription() {
