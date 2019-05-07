@@ -1,5 +1,6 @@
 package ir.coinance.controller;
 
+import ir.coinance.config.security.SecurityUtils;
 import ir.coinance.dto.UserUpdateDto;
 import ir.coinance.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,11 @@ public class ProfileController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/")
+    public ResponseEntity current() {
+        return ResponseEntity.ok(userService.current());
+    }
 
     @PostMapping("/changePassword")
     public ResponseEntity changePassword(@RequestBody HashMap<String, String> req) {

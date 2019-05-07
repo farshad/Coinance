@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 @Data
 public class UserUpdateDto {
 
-    @NotNull
     private MultipartFile image;
 
     @Email

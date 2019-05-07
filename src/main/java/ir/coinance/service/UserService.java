@@ -84,20 +84,26 @@ public class UserService {
     @Transactional
     public UserDto updateProfile(UserUpdateDto dto){
         User user = securityUtils.getCurrentUser();
-        String imageUrl = profileImageUploadDir + user.getId() + System.currentTimeMillis() + "_" + dto.getImage().getOriginalFilename();
+        if (dto.getImage() != null){
+            String imageUrl = profileImageUploadDir + user.getId() + System.currentTimeMillis() + "_" + dto.getImage().getOriginalFilename();
+            user.setImageUrl(imageUrl);
+            try {
+                byte[] bytes = dto.getImage().getBytes();
+                Path path = Paths.get(imageUrl);
+                Files.write(path, bytes);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         user.setFullName(dto.getFullName());
         user.setEmail(dto.getEmail());
-        user.setImageUrl(imageUrl);
-
-        try {
-            byte[] bytes = dto.getImage().getBytes();
-            Path path = Paths.get(imageUrl);
-            Files.write(path, bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         return mapper.toDto(repository.save(user));
+    }
+
+    @Transactional(readOnly = true)
+    public UserDto current(){
+        return mapper.toDto(securityUtils.getCurrentUser());
     }
 }
