@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,21 +33,25 @@ public class DocumentService {
     private SecurityUtils securityUtils;
 
     @Transactional
-    public DocumentExceptUserDto save(DocumentAddDto dto){
-        Document document = new Document();
-        document.setFileType(enumTypeRepository.getOne(dto.getFileTypeId()));
-        document.setSuffix(dto.getImage().getContentType());
-        document.setName(dto.getImage().getOriginalFilename());
-        document.setStatus(enumTypeRepository.findByKey("document_type_status_wait"));
-        document.setUser(securityUtils.getCurrentUser());
+    public List<DocumentExceptUserDto> save(List<DocumentAddDto> dtos){
+        List<Document> entities = new ArrayList<>();
+        dtos.forEach(dto -> {
+            Document document = new Document();
+            document.setFileType(enumTypeRepository.getOne(dto.getFileTypeId()));
+            document.setSuffix(dto.getImage().getContentType());
+            document.setName(dto.getImage().getOriginalFilename());
+            document.setStatus(enumTypeRepository.findByKey("document_type_status_wait"));
+            document.setUser(securityUtils.getCurrentUser());
 
-        try {
-            document.setImage(dto.getImage().getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            try {
+                document.setImage(dto.getImage().getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            entities.add(document);
+        });
 
-        return mapper.toExceptUserDto(repository.save(document));
+        return mapper.toExceptUserDtos(repository.saveAll(entities));
     }
 
     @Transactional(readOnly = true)
